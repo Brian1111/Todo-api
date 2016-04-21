@@ -29,11 +29,6 @@ app.get('/todos', function (req, res) {
 		});
 	}
 
-
-
-
-
-
 	res.json(filteredTodos);
 });
 
