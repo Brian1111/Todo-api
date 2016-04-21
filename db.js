@@ -3,7 +3,11 @@ var env = process.env.NODE_ENV || 'development';
 var sequelize;
 
 if (env === 'production') {
+<<<<<<< d6560df92f7d8bcd28d8073101382c1d381ddbbe
     sequelize = new Sequelize(process.env.DATABASE_URL {
+=======
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+>>>>>>> Convert GET /todos to sequelize
         dialect: 'postgres'
     });
 } else {

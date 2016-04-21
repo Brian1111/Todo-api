@@ -6,10 +6,13 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 var todos = [];
 var todoNextId = 1;
+
 app.use(bodyParser.json());
+
 app.get('/', function(req, res) {
     res.send('Todo API Root');
 });
+
 app.get('/todos', function(req, res) {
     var query = req.query;
     var where = {};
@@ -31,6 +34,7 @@ app.get('/todos', function(req, res) {
         res.status(500).send();
     });
 });
+
 app.get('/todos/:id', function(req, res) {
     var todoId = parseInt(req.params.id, 10);
     db.todo.findById(todoId).then(function(todo) {
@@ -43,6 +47,7 @@ app.get('/todos/:id', function(req, res) {
         res.status(500).send();
     });
 });
+
 app.post('/todos', function(req, res) {
     var body = _.pick(req.body, 'description', 'completed');
     db.todo.create(body).then(function(todo) {
@@ -51,6 +56,7 @@ app.post('/todos', function(req, res) {
         res.status(400).json(e);
     });
 });
+
 app.delete('/todos/:id', function(req, res) {
     var todoId = parseInt(req.params.id, 10);
     var matchedTodo = _.findWhere(todos, {
@@ -65,6 +71,7 @@ app.delete('/todos/:id', function(req, res) {
         res.json(matchedTodo);
     }
 });
+
 app.put('/todos/:id', function(req, res) {
     var todoId = parseInt(req.params.id, 10);
     var matchedTodo = _.findWhere(todos, {
@@ -88,6 +95,7 @@ app.put('/todos/:id', function(req, res) {
     _.extend(matchedTodo, validAttributes);
     res.json(matchedTodo);
 });
+
 db.sequelize.sync().then(function() {
     app.listen(PORT, function() {
         console.log('Express listening on port ' + PORT + '!');
